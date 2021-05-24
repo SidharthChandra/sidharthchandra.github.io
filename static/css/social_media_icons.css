@@ -1,0 +1,10 @@
+
+.social-media-icon {
+    margin-top: 2rem;
+    color: grey;
+}
+
+.social-media-icon:hover {
+    margin-top: 2rem;
+    color: white
+}
