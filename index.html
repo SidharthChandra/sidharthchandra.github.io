@@ -62,6 +62,21 @@
         .main-content  { padding-left: 6rem; }
         .page-section  { position: relative; z-index: 1; }
 
+        /* ── SECTION CARD LIFT (on scroll-in) ── */
+        .section-card {
+            border-radius: 16px;
+            border: 1px solid transparent;
+            padding: 0.5rem 1.5rem;
+            transition: transform 0.55s cubic-bezier(0.23,1,0.32,1),
+                        box-shadow 0.55s cubic-bezier(0.23,1,0.32,1),
+                        border-color 0.55s ease;
+        }
+        .section-card.lifted {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(255,255,255,0.04), 0 8px 24px rgba(0,0,0,0.6);
+            border-color: #1e1e1e;
+        }
+
         /* ── SECTION LABEL ── */
         .section-label {
             color: white; font-weight: 800; font-size: 1.6rem;
@@ -146,8 +161,18 @@
 
         /* ── ACTIVITY ── */
         .stats-grid { display: flex; gap: 2rem; flex-wrap: wrap; }
-        .stats-card { flex: 1; min-width: 260px; border: 1px solid #1e1e1e; padding: 1.25rem; border-radius: 6px; transition: border-color 0.3s; }
-        .stats-card:hover { border-color: #444; }
+        .stats-card {
+            flex: 1; min-width: 260px; border: 1px solid #1e1e1e; padding: 1.25rem; border-radius: 12px;
+            transition: transform 0.35s cubic-bezier(0.23,1,0.32,1),
+                        box-shadow 0.35s cubic-bezier(0.23,1,0.32,1),
+                        border-color 0.3s;
+            cursor: default;
+        }
+        .stats-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 24px 64px rgba(255,255,255,0.05), 0 8px 24px rgba(0,0,0,0.7);
+            border-color: #444;
+        }
         .stats-card-title { color: #aaa; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .stats-card-title svg { width: 14px; height: 14px; fill: #aaa; }
         .stats-card img { width: 100%; border-radius: 4px; display: block; }
@@ -273,7 +298,7 @@
 
 <!-- ── EXPERIENCE ── -->
 <div id="experience" class="main-content page-section">
-    <div class="container section-block">
+    <div class="container section-block section-card">
         <p class="section-label fade-in">Experience</p>
         <div class="section-divider fade-in"><span></span></div>
         <div class="timeline">
@@ -314,7 +339,7 @@
 
 <!-- ── SKILLS ── -->
 <div id="skills" class="main-content page-section">
-    <div class="container section-block">
+    <div class="container section-block section-card">
         <p class="section-label fade-in">Skills</p>
         <div class="section-divider fade-in"><span></span></div>
         <div class="skills-grid">
@@ -358,7 +383,7 @@
 
 <!-- ── EDUCATION ── -->
 <div id="education" class="main-content page-section">
-    <div class="container section-block">
+    <div class="container section-block section-card">
         <p class="section-label fade-in">Education</p>
         <div class="section-divider fade-in"><span></span></div>
         <div class="timeline">
@@ -378,12 +403,12 @@
 
 <!-- ── CONTACT ── -->
 <div id="contact" class="page-section">
-    <div class="container section-block" style="padding-bottom:5rem;">
+    <div class="container section-block section-card" style="padding-bottom:5rem;">
         <p class="section-label fade-in">Contact</p>
         <div class="section-divider fade-in"><span></span></div>
         <ul class="contact-list fade-in">
             <li><img src="static/icons/call.svg" alt="call"> +91 9074423799</li>
-            <li><img src="static/icons/email.svg" alt="email"> <a href="mailto:chandra.sidhu@gmail.com">chandra.sidhu@gmail.com</a></li>
+            <li><img src="static/icons/email.svg" alt="email"> <a href="/cdn-cgi/l/email-protection#beddd6dfd0daccdf90cdd7dad6cbfed9d3dfd7d290ddd1d3"><span class="__cf_email__" data-cfemail="aac9c2cbc4ced8cb84d9c3cec2dfeacdc7cbc3c684c9c5c7">[email&#160;protected]</span></a></li>
         </ul>
         <hr class="mb-0 fade-in" style="width:70%;border-color:#333;">
         <div class="contact-icons fade-in">
@@ -396,7 +421,7 @@
     </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── PARTICLES ──
 (function(){
     var canvas = document.getElementById('particles');
@@ -466,6 +491,18 @@
     }, { passive: true });
 })();
 
+// ── SECTION CARD LIFT ON SCROLL ──
+(function(){
+    var cards = document.querySelectorAll('.section-card');
+    var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+            if(e.isIntersecting) e.target.classList.add('lifted');
+            else e.target.classList.remove('lifted');
+        });
+    }, { threshold: 0.15 });
+    cards.forEach(function(c){ obs.observe(c); });
+})();
+
 // ── SCROLL FADE-IN ──
 (function(){
     var els = document.querySelectorAll('.fade-in');
@@ -475,13 +512,4 @@
     els.forEach(function(el){ obs.observe(el); });
 })();
 
-// ── BACK TO TOP ──
-(function(){
-    var btn = document.getElementById('backToTop');
-    window.addEventListener('scroll', function(){
-        btn.classList.toggle('visible', window.scrollY > 400);
-    }, { passive: true });
-})();
-</script>
-</body>
-</html>
+// ── BACK 
