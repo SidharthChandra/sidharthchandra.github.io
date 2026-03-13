@@ -5,80 +5,334 @@
     <title>Sidharth P</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js'></script>
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <link rel="stylesheet" type="text/css" href="static/css/base.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="static/css/social_media_icons.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="static/css/name_animation.css" media="screen"/>
+    <style>
+        /* base.css */
+        body {
+            font-family: Poppins;
+            background-color: black;
+        }
+        .nav-item {
+            margin-right: 4rem;
+        }
+        .nav-item:hover, .nav-item.active {
+            border-bottom: 2px solid white;
+        }
+
+        /* name_animation.css */
+        @keyframes tracking-in-expand {
+            0% {
+                letter-spacing: -0.5em;
+                opacity: 0;
+            }
+            40% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        .tracking-in-expand {
+            -webkit-animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+            animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+        }
+
+        /* social_media_icons.css */
+        .social-media-icon {
+            margin-top: 2rem;
+            color: grey;
+        }
+        .social-media-icon:hover {
+            margin-top: 2rem;
+            color: white;
+        }
+        @keyframes socialMediaIconAnimation {
+            0% { transform: scale(2); }
+            100% { transform: scale(1); }
+        }
+        i {
+            animation: 1s ease-out 0s 1 socialMediaIconAnimation;
+        }
+
+        /* sidenav */
+        .sidenav {
+            height: 100%;
+            width: 50px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 4rem;
+        }
+
+        /* offset sections for fixed navbar */
+        .section-block {
+            padding-top: 5rem;
+        }
+
+        /* experience / education */
+        .exp-title {
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .exp-sub {
+            color: #aaaaaa;
+            font-size: 0.95rem;
+        }
+        .exp-date {
+            color: #aaaaaa;
+            font-size: 0.85rem;
+        }
+        .exp-bullets {
+            margin-top: 0.75rem;
+            padding-left: 1.2rem;
+            color: #aaaaaa;
+            font-size: 0.88rem;
+            line-height: 1.8;
+        }
+        .exp-bullets li {
+            margin-bottom: 0.3rem;
+        }
+        hr {
+            border-color: #333;
+        }
+
+        /* skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem 3rem;
+        }
+        .skill-group-title {
+            color: white;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            border-left: 2px solid white;
+            padding-left: 0.6rem;
+        }
+        .skill-group-items {
+            color: #aaaaaa;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* contact */
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        .contact-row img {
+            width: 20px;
+            height: 20px;
+            filter: invert(1);
+        }
+
+        /* section label */
+        .section-label {
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* leetcode text icon (fa 4.7 has no leetcode glyph) */
+        .lc-icon {
+            margin-top: 2rem;
+            color: grey;
+            font-size: 0.75rem;
+            font-weight: bold;
+            font-family: monospace;
+            text-decoration: none;
+            display: block;
+            animation: 1s ease-out 0s 1 socialMediaIconAnimation;
+        }
+        .lc-icon:hover {
+            color: white;
+        }
+    </style>
 </head>
-<style>
-    .sidenav {
-        height: 100%;
-        width: 50px;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 4rem;
-    }
-</style>
 <body>
+
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark d-flex justify-content-center">
     <div>
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="#home">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="experience.html">Experience</a>
+                <a class="nav-link" href="#experience">Experience</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="skills.html">Skills</a>
+                <a class="nav-link" href="#skills">Skills</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="education.html">Education</a>
+                <a class="nav-link" href="#education">Education</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="contacts.html">Contact</a>
+                <a class="nav-link" href="#contact">Contact</a>
             </li>
         </ul>
     </div>
 </nav>
-<div class="container" style="height: 80vh">
-    <div class="sidenav d-flex flex-column justify-content-center align-items-center">
-        <a href="https://www.instagram.com/sidharth_chandra/">
-            <i class="social-media-icon fa fa-instagram fa-lg"></i>
-        </a>
-        <a href="https://www.facebook.com/sidharth.chandra1/">
-            <i class="social-media-icon fa fa-facebook fa-lg"></i>
-        </a>
-        <a href="#">
-            <i class="social-media-icon fa fa-twitter fa-lg"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/sidharth-p-100235166">
-            <i class="social-media-icon fa fa-linkedin-square fa-lg"></i>
-        </a>
-    </div>
-    <div class="d-flex justify-content-center" style="height: 80vh; margin-top: 5rem; margin-left: 2rem">
-        <div class="d-flex align-items-center">
-            <div class="mr-2">
-                <div class="tracking-in-expand" style="color: white;font-weight: bold;font-size: 3rem">Sidharth P</div>
-                <h4>Experienced in Backend and Cloud technologies<br>
-                    with over 6 years of building scalable backend systems<br> 
-                    and deploying cloud-native solutions.<br>
-                    Possess a solid software development foundation,<br>
-                    with proficiency across multiple cloud platforms,<br>
-                    containerization tools, and IaC.<br>
-                    Proven ability to bridge development and operations,<br>
-                    delivering secure, reliable, & high-performing applications.<br>
-                </h4>
-                <br>
-                <a href="sidharth_p_resume.pdf" download style="text-decoration: none;">
-                    <span style="color: white;font-weight: bold;font-size: 1rem">Download Resume</span>
-                    <i class="fa fa-download" style="margin-left: 8px;color: white;"></i>
-                </a>
+
+<!-- SIDE NAV -->
+<div class="sidenav d-flex flex-column justify-content-center align-items-center">
+    <a href="https://github.com/sidharthchandra" target="_blank">
+        <i class="social-media-icon fa fa-github fa-lg"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/sidharth-p-100235166" target="_blank">
+        <i class="social-media-icon fa fa-linkedin-square fa-lg"></i>
+    </a>
+    <a href="https://leetcode.com/sidharth" target="_blank" class="lc-icon">LC</a>
+</div>
+
+<!-- ======== HOME ======== -->
+<div id="home">
+    <div class="container" style="height: 80vh">
+        <div class="d-flex justify-content-center" style="height: 80vh; margin-top: 5rem; margin-left: 2rem">
+            <div class="d-flex align-items-center">
+                <div class="mr-2">
+                    <div class="tracking-in-expand" style="color: white; font-weight: bold; font-size: 3rem">Sidharth P</div>
+                    <h4>Experienced in Backend and Cloud technologies<br>
+                        with over 6 years of building scalable backend systems<br>
+                        and deploying cloud-native solutions.<br>
+                        Possess a solid software development foundation,<br>
+                        with proficiency across multiple cloud platforms,<br>
+                        containerization tools, and IaC.<br>
+                        Proven ability to bridge development and operations,<br>
+                        delivering secure, reliable, & high-performing applications.<br>
+                    </h4>
+                    <br>
+                    <a href="sidharth_p_resume.pdf" download style="text-decoration: none;">
+                        <span style="color: white; font-weight: bold; font-size: 1rem">Download Resume</span>
+                        <i class="fa fa-download" style="margin-left: 8px; color: white;"></i>
+                    </a>
+                </div>
             </div>
+            <img src="static/images/sid.png" style="height: 450px; width: 380px">
         </div>
-        <img src="static/images/sid.png" style="height: 450px; width: 380px">
     </div>
 </div>
+
+<!-- ======== EXPERIENCE ======== -->
+<div id="experience">
+    <div class="container section-block" style="margin-left: 6rem;">
+        <p class="section-label">Experience</p>
+
+        <div class="mb-4">
+            <div class="exp-title">Software Development Engineer 3</div>
+            <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
+            <div class="exp-date">Oct 2022 - Present</div>
+            <ul class="exp-bullets">
+                <li>Architected cloud infrastructure using Terraform (IaC) on Azure and GCP, implementing autoscaling, monitoring, and cost-optimization strategies, resulting in ~50% reduction in cloud spend.</li>
+                <li>Architected and developed a multi-tenant cloud resource management platform, automating Azure infrastructure provisioning for new tenants, reducing onboarding time from days to minutes.</li>
+                <li>Built and operated containerized microservices using Docker and Kubernetes, with CI/CD pipelines to enable frequent, reliable, and zero-downtime releases.</li>
+                <li>Built and deployed a scalable web crawler with integrated data cleaning and autoscaling, reducing crawl time by 40% and ensuring stable performance during high-traffic spikes.</li>
+            </ul>
+        </div>
+        <hr>
+
+        <div class="mb-4">
+            <div class="exp-title">Software Development Engineer</div>
+            <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
+            <div class="exp-date">Nov 2019 - Sept 2022</div>
+            <ul class="exp-bullets">
+                <li>Implemented asynchronous processing using Celery and Redis, improving system throughput and responsiveness, and monitored background jobs using Flower.</li>
+                <li>Owned end-to-end delivery of backend features from design and implementation to deployment and production support, while mentoring junior developers and enforcing code quality standards.</li>
+                <li>Improved system reliability and scalability by integrating load balancing and traffic management, enabling better fault tolerance and cost-efficient scaling.</li>
+                <li>Led the migration of cloud infrastructure on GCP to a secure, private network setup with IAM hardening, access controls, backups, and disaster recovery mechanisms.</li>
+            </ul>
+        </div>
+        <hr>
+
+        <div class="mb-4">
+            <div class="exp-title">Software Developer Intern</div>
+            <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
+            <div class="exp-date">May 2019 - Oct 2019</div>
+            <ul class="exp-bullets">
+                <li>Developed RESTful APIs using Django REST Framework, supporting core platform features and seamless integration with frontend and third-party services.</li>
+                <li>Automated backend workflows and internal tools, reducing manual operations by 40% and improving delivery speed and reliability.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ======== SKILLS ======== -->
+<div id="skills">
+    <div class="container section-block" style="margin-left: 6rem;">
+        <p class="section-label">Skills</p>
+        <div class="skills-grid">
+            <div class="skill-group">
+                <div class="skill-group-title">Languages</div>
+                <div class="skill-group-items">Python · JavaScript</div>
+            </div>
+            <div class="skill-group">
+                <div class="skill-group-title">Frameworks</div>
+                <div class="skill-group-items">Django · FastAPI · REST APIs · Celery</div>
+            </div>
+            <div class="skill-group">
+                <div class="skill-group-title">Cloud</div>
+                <div class="skill-group-items">GCP · Microsoft Azure · AWS</div>
+            </div>
+            <div class="skill-group">
+                <div class="skill-group-title">DevOps & Infra</div>
+                <div class="skill-group-items">Docker · Kubernetes · Terraform · GitHub Actions</div>
+            </div>
+            <div class="skill-group">
+                <div class="skill-group-title">Databases</div>
+                <div class="skill-group-items">PostgreSQL · MySQL · Redis</div>
+            </div>
+            <div class="skill-group">
+                <div class="skill-group-title">Frontend</div>
+                <div class="skill-group-items">HTML5 · CSS · jQuery · JavaScript</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ======== EDUCATION ======== -->
+<div id="education">
+    <div class="container section-block" style="margin-left: 6rem;">
+        <p class="section-label">Education</p>
+
+        <div class="mb-4">
+            <div class="exp-title">Advanced Diploma, Big Data Analytics</div>
+            <div class="exp-sub">National Institute of Electronics & Information Technology, Calicut</div>
+            <div class="exp-date">Apr 2018 - Aug 2018</div>
+        </div>
+        <hr>
+
+        <div class="mb-4">
+            <div class="exp-title">BTech, Electronics & Communications Engineering</div>
+            <div class="exp-sub">Govt. College of Engineering, Wayanad</div>
+            <div class="exp-date">2013 - 2017</div>
+        </div>
+    </div>
+</div>
+
+<!-- ======== CONTACT ======== -->
+<div id="contact">
+    <div class="container section-block" style="margin-left: 6rem; padding-bottom: 5rem;">
+        <p class="section-label">Contact</p>
+        <div class="contact-row">
+            <img src="static/icons/call.svg" alt="phone">
+            +91 9074423799
+        </div>
+        <div class="contact-row">
+            <img src="static/icons/email.svg" alt="email">
+            chandra.sidhu@gmail.com
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
