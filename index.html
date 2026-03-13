@@ -9,15 +9,25 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
         /* ── BASE ── */
-        body {
-            font-family: Poppins, sans-serif;
-            background-color: black;
-            color: #aaaaaa;
-        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: Poppins, sans-serif; background-color: #000; color: #aaa; margin: 0; }
+
+        /* ── PARTICLES ── */
+        #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
         /* ── NAVBAR ── */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            transition: transform 0.35s ease, background 0.35s ease;
+            background: rgba(0,0,0,0.85) !important;
+            backdrop-filter: blur(10px);
+        }
+        .navbar.hidden { transform: translateY(-100%); }
         .nav-item { margin-right: 2rem; }
-        .nav-item:hover, .nav-item.active { border-bottom: 2px solid white; }
+        .nav-item .nav-link { color: #aaa !important; transition: color 0.2s; padding-bottom: 2px; }
+        .nav-item.active .nav-link,
+        .nav-item .nav-link:hover { color: #fff !important; border-bottom: 2px solid white; }
 
         /* ── NAME ANIMATION ── */
         @keyframes tracking-in-expand {
@@ -26,119 +36,120 @@
             100% { opacity: 1; }
         }
         .tracking-in-expand {
-            -webkit-animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
-            animation:         tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+            animation: tracking-in-expand 0.7s cubic-bezier(0.215,0.61,0.355,1) both;
         }
 
         /* ── SOCIAL ICONS ── */
-        @keyframes socialMediaIconAnimation {
-            0%   { transform: scale(2); }
-            100% { transform: scale(1); }
-        }
+        @keyframes socialMediaIconAnimation { 0% { transform: scale(2); } 100% { transform: scale(1); } }
         i { animation: 1s ease-out 0s 1 socialMediaIconAnimation; }
-
         .social-media-icon { color: grey; transition: color 0.2s; }
         .social-media-icon:hover { color: white; }
 
-        /* ── SIDENAV — hidden on mobile ── */
+        /* ── SIDENAV ── */
         .sidenav {
-            height: 100%;
-            width: 50px;
-            position: fixed;
-            z-index: 10;
-            top: 0;
-            left: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 1.5rem;
+            position: fixed; z-index: 10; top: 0; left: 2rem;
+            height: 100%; width: 50px;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: 1.5rem;
         }
         .sidenav a { display: flex; align-items: center; justify-content: center; }
         .lc-icon { display: flex; align-items: center; justify-content: center; animation: 1s ease-out 0s 1 socialMediaIconAnimation; }
         .lc-icon svg { width: 18px; height: 18px; fill: grey; transition: fill 0.2s; }
         .lc-icon:hover svg { fill: white; }
 
-        /* ── SECTION WRAPPER ── */
+        /* ── LAYOUT ── */
         .section-block { padding-top: 5rem; padding-bottom: 3rem; }
-        .main-content  { padding-left: 6rem; }  /* clears sidenav on desktop */
+        .main-content  { padding-left: 6rem; }
+        .page-section  { position: relative; z-index: 1; }
 
         /* ── SECTION LABEL ── */
         .section-label {
-            color: white;
-            font-weight: 800;
-            font-size: 1.6rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            letter-spacing: 0.05em;
+            color: white; font-weight: 800; font-size: 1.6rem;
+            margin-bottom: 0.5rem; text-align: center; letter-spacing: 0.05em;
+        }
+
+        /* ── SECTION DIVIDER ── */
+        .section-divider {
+            display: flex; align-items: center;
+            justify-content: center; gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+        .section-divider::before,
+        .section-divider::after {
+            content: ''; flex: 1; max-width: 120px;
+            height: 1px; background: linear-gradient(90deg, transparent, #444);
+        }
+        .section-divider::after { background: linear-gradient(90deg, #444, transparent); }
+        .section-divider span {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: white; display: inline-block;
         }
 
         /* ── HOME ── */
         .home-inner {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 3rem;
-            min-height: 80vh;
-            padding-top: 4rem;
-            flex-wrap: wrap;
+            display: flex; align-items: center; justify-content: center;
+            gap: 3rem; min-height: 80vh; padding-top: 4rem; flex-wrap: wrap;
         }
         .home-text { flex: 1; min-width: 260px; max-width: 560px; }
         .home-name { color: white; font-weight: bold; font-size: 3rem; }
-        .bio-text  { color: #aaaaaa; font-size: 1.1rem; line-height: 1.7; margin-top: 0.75rem; }
+
+        /* ── TYPING TAGLINE ── */
+        .tagline {
+            font-size: 1rem; color: #888; margin-top: 0.4rem; margin-bottom: 0.75rem;
+            letter-spacing: 0.05em; height: 1.4em;
+        }
+        .tagline-text { color: #ccc; }
+        .tagline-cursor {
+            display: inline-block; width: 2px; height: 1em;
+            background: white; margin-left: 2px;
+            animation: blink 0.8s step-end infinite;
+            vertical-align: text-bottom;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .bio-text  { color: #aaa; font-size: 1.1rem; line-height: 1.7; margin-top: 0.5rem; }
         .home-img  { height: 380px; width: auto; max-width: 100%; object-fit: contain; }
 
-        /* ── EXPERIENCE / EDUCATION ── */
-        .exp-title { color: white; font-weight: bold; font-size: 1.1rem; }
-        .exp-sub   { color: #aaaaaa; font-size: 0.95rem; }
-        .exp-date  { color: #aaaaaa; font-size: 0.85rem; }
-        .exp-bullets {
-            margin-top: 0.75rem;
-            padding-left: 1.2rem;
-            color: #aaaaaa;
-            font-size: 0.88rem;
-            line-height: 1.8;
+        /* ── TIMELINE (Experience) ── */
+        .timeline { position: relative; padding-left: 2rem; }
+        .timeline::before {
+            content: ''; position: absolute;
+            left: 0; top: 8px; bottom: 8px; width: 1px;
+            background: linear-gradient(to bottom, #fff 0%, #444 60%, transparent 100%);
         }
-        .exp-bullets li { margin-bottom: 0.3rem; }
-        hr { border-color: #333; }
+        .timeline-item { position: relative; margin-bottom: 2.5rem; }
+        .timeline-item::before {
+            content: ''; position: absolute;
+            left: -2.4rem; top: 6px;
+            width: 10px; height: 10px; border-radius: 50%;
+            background: white; border: 2px solid black;
+            box-shadow: 0 0 0 3px #333;
+        }
+        .exp-title { color: white; font-weight: bold; font-size: 1.1rem; }
+        .exp-sub   { color: #aaa; font-size: 0.95rem; }
+        .exp-date  {
+            display: inline-block; font-size: 0.72rem; color: #888;
+            border: 1px solid #333; padding: 1px 8px; border-radius: 20px;
+            margin: 4px 0 8px;
+        }
+        .exp-bullets { margin-top: 0.5rem; padding-left: 1.1rem; color: #aaa; font-size: 0.88rem; line-height: 1.8; }
+        .exp-bullets li { margin-bottom: 0.25rem; }
 
         /* ── SKILLS ── */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem 3rem;
-        }
+        .skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem 3rem; }
         .skill-group-title {
-            color: white;
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-            border-left: 2px solid white;
-            padding-left: 0.6rem;
+            color: white; font-size: 0.75rem; letter-spacing: 0.15em;
+            text-transform: uppercase; margin-bottom: 0.5rem;
+            border-left: 2px solid white; padding-left: 0.6rem;
         }
-        .skill-group-items { color: #aaaaaa; font-size: 0.9rem; line-height: 1.6; }
+        .skill-group-items { color: #aaa; font-size: 0.9rem; line-height: 1.6; }
 
-        /* ── ACTIVITY / STATS ── */
+        /* ── ACTIVITY ── */
         .stats-grid { display: flex; gap: 2rem; flex-wrap: wrap; }
-        .stats-card {
-            flex: 1;
-            min-width: 260px;
-            border: 1px solid #222;
-            padding: 1.25rem;
-            border-radius: 6px;
-        }
-        .stats-card-title {
-            color: #aaaaaa;
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .stats-card-title svg { width: 14px; height: 14px; fill: #aaaaaa; }
+        .stats-card { flex: 1; min-width: 260px; border: 1px solid #1e1e1e; padding: 1.25rem; border-radius: 6px; transition: border-color 0.3s; }
+        .stats-card:hover { border-color: #444; }
+        .stats-card-title { color: #aaa; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .stats-card-title svg { width: 14px; height: 14px; fill: #aaa; }
         .stats-card img { width: 100%; border-radius: 4px; display: block; }
 
         /* ── CONTACT ── */
@@ -148,110 +159,93 @@
         .contact-list a { color: white; text-decoration: none; }
         .contact-list a:hover { text-decoration: underline; }
         .contact-icons { display: flex; justify-content: center; align-items: center; gap: 1.5rem; margin-top: 1rem; }
-        .contact-icons .social-media-icon { margin-top: 0; }
         .lc-contact { display: inline-flex; align-items: center; }
-        .lc-contact svg {
-            width: 22px;
-            height: 22px;
-            fill: grey;
-            transition: fill 0.2s;
-            display: block !important;
-            overflow: visible !important;
-        }
+        .lc-contact svg { width: 22px; height: 22px; fill: grey; transition: fill 0.2s; }
         .lc-contact:hover svg { fill: white; }
-        /* prevent FA5 JS from touching our custom SVGs */
-        .lc-contact svg path, .lc-icon svg path, .lc-mob svg path {
-            fill: inherit;
-        }
 
-        /* ── MOBILE BOTTOM NAV ICONS (replaces sidenav) ── */
-        .mobile-socials {
-            display: none;
-            justify-content: center;
-            gap: 1.5rem;
-            padding: 1.5rem 0 0.5rem;
+        /* ── SCROLL FADE-IN ── */
+        .fade-in { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── BACK TO TOP ── */
+        #backToTop {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: #222; border: 1px solid #444; color: white;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s, background 0.2s;
+            font-size: 1rem;
         }
+        #backToTop.visible { opacity: 1; pointer-events: all; }
+        #backToTop:hover { background: #333; }
+
+        /* ── MOBILE ── */
+        .mobile-socials { display: none; justify-content: center; gap: 1.5rem; padding: 1.5rem 0 0.5rem; }
         .mobile-socials a { display: flex; align-items: center; }
         .mobile-socials .lc-mob svg { width: 20px; height: 20px; fill: grey; transition: fill 0.2s; }
         .mobile-socials .lc-mob:hover svg { fill: white; }
 
-        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-            /* hide desktop sidenav */
             .sidenav { display: none; }
-
-            /* no left padding offset on mobile */
             .main-content { padding-left: 0; }
-
-            /* show mobile socials row */
             .mobile-socials { display: flex; }
-
-            /* navbar items smaller */
             .nav-item { margin-right: 0.75rem; }
-            .nav-link  { font-size: 0.8rem; padding: 0.4rem 0.3rem !important; }
-
-            /* home layout: image on top, text below */
+            .nav-link { font-size: 0.8rem; padding: 0.4rem 0.3rem !important; }
             .home-inner { flex-direction: column-reverse; gap: 1.5rem; padding-top: 5rem; min-height: unset; text-align: center; }
-            .home-name  { font-size: 2rem; }
-            .bio-text   { font-size: 0.95rem; }
-            .home-img   { height: 220px; }
-
-            /* section padding */
+            .home-name { font-size: 2rem; }
+            .bio-text { font-size: 0.95rem; }
+            .home-img { height: 220px; }
             .section-block { padding-top: 3.5rem; padding-bottom: 2rem; }
             .section-label { font-size: 1.3rem; }
-
-            /* skills: 2 cols on mobile */
-            .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem 1.5rem; }
-
-            /* stats stack vertically */
+            .skills-grid { grid-template-columns: repeat(2,1fr); gap: 1.25rem 1.5rem; }
             .stats-grid { flex-direction: column; }
+            .timeline { padding-left: 1.5rem; }
         }
-
         @media (max-width: 480px) {
             .skills-grid { grid-template-columns: 1fr; }
-            .home-name   { font-size: 1.75rem; }
+            .home-name { font-size: 1.75rem; }
         }
     </style>
 </head>
 <body>
 
+<!-- ── PARTICLES ── -->
+<canvas id="particles"></canvas>
+
 <!-- ── NAVBAR ── -->
-<nav class="navbar navbar-expand-lg navbar-dark d-flex justify-content-center">
+<nav id="navbar" class="navbar navbar-expand-lg navbar-dark d-flex justify-content-center">
     <div>
         <ul class="navbar-nav flex-wrap justify-content-center">
-            <li class="nav-item active"><a class="nav-link" href="#home">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
-            <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-            <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
-            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+            <li class="nav-item active" data-section="home"><a class="nav-link" href="#home">Home</a></li>
+            <li class="nav-item" data-section="experience"><a class="nav-link" href="#experience">Experience</a></li>
+            <li class="nav-item" data-section="skills"><a class="nav-link" href="#skills">Skills</a></li>
+            <li class="nav-item" data-section="education"><a class="nav-link" href="#education">Education</a></li>
+            <li class="nav-item" data-section="contact"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
     </div>
 </nav>
 
-<!-- ── DESKTOP SIDENAV ── -->
+<!-- ── SIDENAV ── -->
 <div class="sidenav">
-    <a href="https://github.com/SidharthChandra" target="_blank">
-        <i class="social-media-icon fab fa-github fa-lg"></i>
-    </a>
-    <a href="https://www.linkedin.com/in/sidharth1994" target="_blank">
-        <i class="social-media-icon fab fa-linkedin fa-lg"></i>
-    </a>
+    <a href="https://github.com/SidharthChandra" target="_blank"><i class="social-media-icon fab fa-github fa-lg"></i></a>
+    <a href="https://www.linkedin.com/in/sidharth1994" target="_blank"><i class="social-media-icon fab fa-linkedin fa-lg"></i></a>
     <a href="https://leetcode.com/u/sidharthchandra/" target="_blank" class="lc-icon">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.884l1.86-1.994a3.001 3.001 0 0 1 4.267-.04l1.303 1.303a1.378 1.378 0 0 0 1.951 0 1.378 1.378 0 0 0 0-1.951l-1.303-1.303A5.757 5.757 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"/></svg>
     </a>
 </div>
 
+<!-- ── BACK TO TOP ── -->
+<div id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fas fa-chevron-up"></i>
+</div>
+
 <!-- ── HOME ── -->
-<div id="home" class="main-content">
+<div id="home" class="main-content page-section">
     <div class="container">
-        <!-- mobile social icons shown only on small screens -->
         <div class="mobile-socials">
-            <a href="https://github.com/SidharthChandra" target="_blank">
-                <i class="social-media-icon fab fa-github fa-lg"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/sidharth1994" target="_blank">
-                <i class="social-media-icon fab fa-linkedin fa-lg"></i>
-            </a>
+            <a href="https://github.com/SidharthChandra" target="_blank"><i class="social-media-icon fab fa-github fa-lg"></i></a>
+            <a href="https://www.linkedin.com/in/sidharth1994" target="_blank"><i class="social-media-icon fab fa-linkedin fa-lg"></i></a>
             <a href="https://leetcode.com/u/sidharthchandra/" target="_blank" class="lc-mob">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.884l1.86-1.994a3.001 3.001 0 0 1 4.267-.04l1.303 1.303a1.378 1.378 0 0 0 1.951 0 1.378 1.378 0 0 0 0-1.951l-1.303-1.303A5.757 5.757 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"/></svg>
             </a>
@@ -259,6 +253,7 @@
         <div class="home-inner">
             <div class="home-text">
                 <div class="tracking-in-expand home-name">Sidharth P</div>
+                <div class="tagline"><span class="tagline-text" id="taglineText"></span><span class="tagline-cursor"></span></div>
                 <p class="bio-text">
                     Senior Software Engineer with 6+ years of experience designing scalable, cloud-native backend systems.
                     Specialized in Python, Django, REST APIs, and distributed architectures, with strong ownership across design,
@@ -266,9 +261,9 @@
                     using Docker, Kubernetes, Terraform, and CI/CD, and in driving backend engineering best practices at scale.
                 </p>
                 <br>
-                <a href="sidharth_p_resume.pdf" download style="text-decoration: none;">
-                    <span style="color: white; font-weight: bold; font-size: 1rem">Download Resume</span>
-                    <i class="fas fa-download" style="margin-left: 8px; color: white;"></i>
+                <a href="sidharth_p_resume.pdf" download style="text-decoration:none;">
+                    <span style="color:white;font-weight:bold;font-size:1rem">Download Resume</span>
+                    <i class="fas fa-download" style="margin-left:8px;color:white;"></i>
                 </a>
             </div>
             <img src="static/images/sid.png" class="home-img" alt="Sidharth P">
@@ -277,87 +272,69 @@
 </div>
 
 <!-- ── EXPERIENCE ── -->
-<div id="experience" class="main-content">
+<div id="experience" class="main-content page-section">
     <div class="container section-block">
-        <p class="section-label">Experience</p>
-
-        <div class="mb-4">
-            <div class="exp-title">Software Development Engineer 3</div>
-            <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
-            <div class="exp-date">Oct 2022 - Present</div>
-            <ul class="exp-bullets">
-                <li>Architected cloud infrastructure using Terraform (IaC) on Azure and GCP, implementing autoscaling, monitoring, and cost-optimization strategies, resulting in ~50% reduction in cloud spend.</li>
-                <li>Architected and developed a multi-tenant cloud resource management platform, automating Azure infrastructure provisioning for new tenants, reducing onboarding time from days to minutes.</li>
-                <li>Built and operated containerized microservices using Docker and Kubernetes, with CI/CD pipelines to enable frequent, reliable, and zero-downtime releases.</li>
-                <li>Built and deployed a scalable web crawler with integrated data cleaning and autoscaling, reducing crawl time by 40% and ensuring stable performance during high-traffic spikes.</li>
-            </ul>
-        </div>
-        <hr>
-
-        <div class="mb-4">
-            <div class="exp-title">Software Development Engineer</div>
-            <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
-            <div class="exp-date">Nov 2019 - Sept 2022</div>
-            <ul class="exp-bullets">
-                <li>Implemented asynchronous processing using Celery and Redis, improving system throughput and responsiveness, and monitored background jobs using Flower.</li>
-                <li>Owned end-to-end delivery of backend features from design and implementation to deployment and production support, while mentoring junior developers and enforcing code quality standards.</li>
-                <li>Improved system reliability and scalability by integrating load balancing and traffic management, enabling better fault tolerance and cost-efficient scaling.</li>
-                <li>Led the migration of cloud infrastructure on GCP to a secure, private network setup with IAM hardening, access controls, backups, and disaster recovery mechanisms.</li>
-            </ul>
-        </div>
-        <hr>
-
-        <div class="mb-4">
-            <div class="exp-title">Software Developer Intern</div>
-            <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
-            <div class="exp-date">May 2019 - Oct 2019</div>
-            <ul class="exp-bullets">
-                <li>Developed RESTful APIs using Django REST Framework, supporting core platform features and seamless integration with frontend and third-party services.</li>
-                <li>Automated backend workflows and internal tools, reducing manual operations by 40% and improving delivery speed and reliability.</li>
-            </ul>
+        <p class="section-label fade-in">Experience</p>
+        <div class="section-divider fade-in"><span></span></div>
+        <div class="timeline">
+            <div class="timeline-item fade-in">
+                <div class="exp-title">Software Development Engineer 3</div>
+                <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
+                <div class="exp-date">Oct 2022 — Present</div>
+                <ul class="exp-bullets">
+                    <li>Architected cloud infrastructure using Terraform (IaC) on Azure and GCP, implementing autoscaling, monitoring, and cost-optimization strategies, resulting in ~50% reduction in cloud spend.</li>
+                    <li>Architected and developed a multi-tenant cloud resource management platform, automating Azure infrastructure provisioning for new tenants, reducing onboarding time from days to minutes.</li>
+                    <li>Built and operated containerized microservices using Docker and Kubernetes, with CI/CD pipelines to enable frequent, reliable, and zero-downtime releases.</li>
+                    <li>Built and deployed a scalable web crawler with integrated data cleaning and autoscaling, reducing crawl time by 40% and ensuring stable performance during high-traffic spikes.</li>
+                </ul>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="exp-title">Software Development Engineer</div>
+                <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
+                <div class="exp-date">Nov 2019 — Sept 2022</div>
+                <ul class="exp-bullets">
+                    <li>Implemented asynchronous processing using Celery and Redis, improving system throughput and responsiveness, and monitored background jobs using Flower.</li>
+                    <li>Owned end-to-end delivery of backend features from design and implementation to deployment and production support, while mentoring junior developers and enforcing code quality standards.</li>
+                    <li>Improved system reliability and scalability by integrating load balancing and traffic management, enabling better fault tolerance and cost-efficient scaling.</li>
+                    <li>Led the migration of cloud infrastructure on GCP to a secure, private network setup with IAM hardening, access controls, backups, and disaster recovery mechanisms.</li>
+                </ul>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="exp-title">Software Developer Intern</div>
+                <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
+                <div class="exp-date">May 2019 — Oct 2019</div>
+                <ul class="exp-bullets">
+                    <li>Developed RESTful APIs using Django REST Framework, supporting core platform features and seamless integration with frontend and third-party services.</li>
+                    <li>Automated backend workflows and internal tools, reducing manual operations by 40% and improving delivery speed and reliability.</li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- ── SKILLS ── -->
-<div id="skills" class="main-content">
+<div id="skills" class="main-content page-section">
     <div class="container section-block">
-        <p class="section-label">Skills</p>
+        <p class="section-label fade-in">Skills</p>
+        <div class="section-divider fade-in"><span></span></div>
         <div class="skills-grid">
-            <div class="skill-group">
-                <div class="skill-group-title">Languages</div>
-                <div class="skill-group-items">Python · JavaScript</div>
-            </div>
-            <div class="skill-group">
-                <div class="skill-group-title">Frameworks</div>
-                <div class="skill-group-items">Django · FastAPI · REST APIs · Celery</div>
-            </div>
-            <div class="skill-group">
-                <div class="skill-group-title">Cloud</div>
-                <div class="skill-group-items">GCP · Microsoft Azure · AWS</div>
-            </div>
-            <div class="skill-group">
-                <div class="skill-group-title">DevOps & Infra</div>
-                <div class="skill-group-items">Docker · Kubernetes · Terraform · GitHub Actions</div>
-            </div>
-            <div class="skill-group">
-                <div class="skill-group-title">Databases</div>
-                <div class="skill-group-items">PostgreSQL · MySQL · Redis</div>
-            </div>
-            <div class="skill-group">
-                <div class="skill-group-title">Frontend</div>
-                <div class="skill-group-items">HTML5 · CSS · jQuery · JavaScript</div>
-            </div>
+            <div class="skill-group fade-in"><div class="skill-group-title">Languages</div><div class="skill-group-items">Python · JavaScript</div></div>
+            <div class="skill-group fade-in"><div class="skill-group-title">Frameworks</div><div class="skill-group-items">Django · FastAPI · REST APIs · Celery</div></div>
+            <div class="skill-group fade-in"><div class="skill-group-title">Cloud</div><div class="skill-group-items">GCP · Microsoft Azure · AWS</div></div>
+            <div class="skill-group fade-in"><div class="skill-group-title">DevOps & Infra</div><div class="skill-group-items">Docker · Kubernetes · Terraform · GitHub Actions</div></div>
+            <div class="skill-group fade-in"><div class="skill-group-title">Databases</div><div class="skill-group-items">PostgreSQL · MySQL · Redis</div></div>
+            <div class="skill-group fade-in"><div class="skill-group-title">Frontend</div><div class="skill-group-items">HTML5 · CSS · jQuery · JavaScript</div></div>
         </div>
     </div>
 </div>
 
 <!-- ── ACTIVITY ── -->
-<div id="stats" class="main-content">
+<div id="stats" class="main-content page-section">
     <div class="container section-block">
-        <p class="section-label">Activity</p>
+        <p class="section-label fade-in">Activity</p>
+        <div class="section-divider fade-in"><span></span></div>
         <div class="stats-grid">
-            <div class="stats-card">
+            <div class="stats-card fade-in">
                 <div class="stats-card-title">
                     <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
                     GitHub Contributions
@@ -366,7 +343,7 @@
                     <img src="https://github-readme-stats.vercel.app/api?username=SidharthChandra&show_icons=true&theme=dark&bg_color=0d0d0d&title_color=ffffff&text_color=aaaaaa&icon_color=aaaaaa&border_color=222222" alt="GitHub Stats">
                 </a>
             </div>
-            <div class="stats-card">
+            <div class="stats-card fade-in">
                 <div class="stats-card-title">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.884l1.86-1.994a3.001 3.001 0 0 1 4.267-.04l1.303 1.303a1.378 1.378 0 0 0 1.951 0 1.378 1.378 0 0 0 0-1.951l-1.303-1.303A5.757 5.757 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"/></svg>
                     LeetCode Stats
@@ -380,40 +357,38 @@
 </div>
 
 <!-- ── EDUCATION ── -->
-<div id="education" class="main-content">
+<div id="education" class="main-content page-section">
     <div class="container section-block">
-        <p class="section-label">Education</p>
-
-        <div class="mb-4">
-            <div class="exp-title">Advanced Diploma, Big Data Analytics</div>
-            <div class="exp-sub">National Institute of Electronics & Information Technology, Calicut</div>
-            <div class="exp-date">Apr 2018 - Aug 2018</div>
-        </div>
-        <hr>
-
-        <div class="mb-4">
-            <div class="exp-title">BTech, Electronics & Communications Engineering</div>
-            <div class="exp-sub">Govt. College of Engineering, Wayanad</div>
-            <div class="exp-date">2013 - 2017</div>
+        <p class="section-label fade-in">Education</p>
+        <div class="section-divider fade-in"><span></span></div>
+        <div class="timeline">
+            <div class="timeline-item fade-in">
+                <div class="exp-title">Advanced Diploma, Big Data Analytics</div>
+                <div class="exp-sub">National Institute of Electronics & Information Technology, Calicut</div>
+                <div class="exp-date">Apr 2018 — Aug 2018</div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="exp-title">BTech, Electronics & Communications Engineering</div>
+                <div class="exp-sub">Govt. College of Engineering, Wayanad</div>
+                <div class="exp-date">2013 — 2017</div>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- ── CONTACT ── -->
-<div id="contact">
-    <div class="container section-block" style="padding-bottom: 5rem;">
-        <ul class="contact-list">
+<div id="contact" class="page-section">
+    <div class="container section-block" style="padding-bottom:5rem;">
+        <p class="section-label fade-in">Contact</p>
+        <div class="section-divider fade-in"><span></span></div>
+        <ul class="contact-list fade-in">
             <li><img src="static/icons/call.svg" alt="call"> +91 9074423799</li>
             <li><img src="static/icons/email.svg" alt="email"> <a href="mailto:chandra.sidhu@gmail.com">chandra.sidhu@gmail.com</a></li>
         </ul>
-        <hr class="mb-0" style="width:70%; border-color: white;">
-        <div class="contact-icons">
-            <a href="https://github.com/SidharthChandra" target="_blank">
-                <i class="social-media-icon fab fa-github fa-lg"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/sidharth1994" target="_blank">
-                <i class="social-media-icon fab fa-linkedin fa-lg"></i>
-            </a>
+        <hr class="mb-0 fade-in" style="width:70%;border-color:#333;">
+        <div class="contact-icons fade-in">
+            <a href="https://github.com/SidharthChandra" target="_blank"><i class="social-media-icon fab fa-github fa-lg"></i></a>
+            <a href="https://www.linkedin.com/in/sidharth1994" target="_blank"><i class="social-media-icon fab fa-linkedin fa-lg"></i></a>
             <a href="https://leetcode.com/u/sidharthchandra/" target="_blank" class="lc-contact">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.884l1.86-1.994a3.001 3.001 0 0 1 4.267-.04l1.303 1.303a1.378 1.378 0 0 0 1.951 0 1.378 1.378 0 0 0 0-1.951l-1.303-1.303A5.757 5.757 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"/></svg>
             </a>
@@ -421,5 +396,92 @@
     </div>
 </div>
 
+<script>
+// ── PARTICLES ──
+(function(){
+    var canvas = document.getElementById('particles');
+    var ctx = canvas.getContext('2d');
+    var dots = [];
+    function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    for(var i=0;i<80;i++){
+        dots.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+            r: Math.random()*1.2+0.3, vx:(Math.random()-0.5)*0.18, vy:(Math.random()-0.5)*0.18, o:Math.random()*0.4+0.1 });
+    }
+    function draw(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        dots.forEach(function(d){
+            d.x+=d.vx; d.y+=d.vy;
+            if(d.x<0||d.x>canvas.width) d.vx*=-1;
+            if(d.y<0||d.y>canvas.height) d.vy*=-1;
+            ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+            ctx.fillStyle='rgba(255,255,255,'+d.o+')'; ctx.fill();
+        });
+        requestAnimationFrame(draw);
+    }
+    draw();
+})();
+
+// ── TYPING TAGLINE ──
+(function(){
+    var words = ['Backend Engineer','Cloud Architect','Python Developer','Distributed Systems'];
+    var el = document.getElementById('taglineText');
+    var wi=0, ci=0, deleting=false;
+    function tick(){
+        var word = words[wi];
+        if(!deleting){ el.textContent = word.slice(0,ci+1); ci++; if(ci===word.length){ deleting=true; setTimeout(tick,1400); return; } }
+        else { el.textContent = word.slice(0,ci-1); ci--; if(ci===0){ deleting=false; wi=(wi+1)%words.length; } }
+        setTimeout(tick, deleting?55:95);
+    }
+    setTimeout(tick, 900);
+})();
+
+// ── NAVBAR HIDE/SHOW ON SCROLL ──
+(function(){
+    var nav = document.getElementById('navbar');
+    var lastY = 0;
+    window.addEventListener('scroll', function(){
+        var y = window.scrollY;
+        if(y > lastY && y > 80) nav.classList.add('hidden');
+        else nav.classList.remove('hidden');
+        lastY = y;
+    }, { passive: true });
+})();
+
+// ── ACTIVE NAV ON SCROLL ──
+(function(){
+    var sections = ['home','experience','skills','stats','education','contact'];
+    var items = document.querySelectorAll('.nav-item[data-section]');
+    window.addEventListener('scroll', function(){
+        var scrollY = window.scrollY + 120;
+        var current = 'home';
+        sections.forEach(function(id){
+            var el = document.getElementById(id);
+            if(el && el.offsetTop <= scrollY) current = id;
+        });
+        items.forEach(function(item){
+            item.classList.toggle('active', item.dataset.section === current);
+        });
+    }, { passive: true });
+})();
+
+// ── SCROLL FADE-IN ──
+(function(){
+    var els = document.querySelectorAll('.fade-in');
+    var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(function(el){ obs.observe(el); });
+})();
+
+// ── BACK TO TOP ──
+(function(){
+    var btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', function(){
+        btn.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+})();
+</script>
 </body>
 </html>
