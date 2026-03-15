@@ -265,11 +265,13 @@
             <div class="home-text">
                 <div class="tracking-in-expand home-name">Sidharth P</div>
                 <div class="tagline"><span class="tagline-text" id="taglineText"></span><span class="tagline-cursor"></span></div>
+                <!-- ── UPDATED BIO ── -->
                 <p class="bio-text">
-                    Senior Software Engineer with 7 years of experience designing scalable, cloud-native backend systems.
-                    Specialized in Python, Django, REST APIs, and distributed architectures, with strong ownership across design,
-                    development, deployment, and production. Experienced in building high-availability platforms on GCP and Azure
-                    using Docker, Kubernetes, Terraform, and CI/CD, and in driving backend engineering best practices at scale.
+                    Senior Backend Engineer with 7 years of experience building high-availability, cloud-native systems at Clootrack.
+                    Owns the full stack of delivery — design, implementation, deployment, and production reliability.
+                    Led cloud infrastructure consolidation that cut monthly spend by ~50% on Azure/GCP.
+                    Specialises in Python, Django, distributed task queues (Celery), containerised microservices, and IaC with Terraform.
+                    Has mentored engineers, enforced engineering standards, and driven zero-downtime release pipelines at scale.
                 </p>
                 <br>
                 <a href="sidharth_p_resume.pdf" download style="text-decoration:none;">
@@ -288,37 +290,44 @@
         <p class="section-label fade-in">Experience</p>
         <div class="section-divider fade-in"><span></span></div>
         <div class="timeline">
+
+            <!-- ── UPDATED: SDE III ── -->
             <div class="timeline-item fade-in">
                 <div class="exp-title">Software Development Engineer 3</div>
                 <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
                 <div class="exp-date">Oct 2022 — Present</div>
                 <ul class="exp-bullets">
-                    <li>Architected cloud infrastructure using Terraform (IaC) on Azure and GCP, implementing autoscaling, monitoring, and cost-optimization strategies, resulting in ~50% reduction in cloud spend.</li>
-                    <li>Architected and developed a multi-tenant cloud resource management platform, automating Azure infrastructure provisioning for new tenants, reducing onboarding time from days to minutes.</li>
-                    <li>Built and operated containerized microservices using Docker and Kubernetes, with CI/CD pipelines to enable frequent, reliable, and zero-downtime releases.</li>
-                    <li>Built and deployed a scalable web crawler with integrated data cleaning and autoscaling, reducing crawl time by 40% and ensuring stable performance during high-traffic spikes.</li>
+                    <li>Reduced cloud infrastructure spend by ~50% (₹60 Lakhs/month → ₹30 Lakhs/month) by re-architecting Azure and GCP environments with Terraform — introducing autoscaling policies, right-sizing VMs, and eliminating idle resources across 3 environments.</li>
+                    <li>Architected and delivered a multi-tenant cloud resource management platform on Azure; automated tenant onboarding from 3 days to under 2 hours, eliminating a class of manual provisioning errors and supporting 50+ active tenants.</li>
+                    <li>Designed and operated containerised microservices on Kubernetes with Docker; established CI/CD pipelines using GitHub Actions, enabling 9+ production deployments per week with zero downtime.</li>
+                    <li>Built and deployed a distributed web crawler with autoscaling and integrated a data-cleaning pipeline; reduced end-to-end crawl time by 40% and maintained stable p99 latency during traffic spikes.</li>
                 </ul>
             </div>
+
+            <!-- ── UPDATED: SDE I ── -->
             <div class="timeline-item fade-in">
                 <div class="exp-title">Software Development Engineer</div>
                 <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
                 <div class="exp-date">Nov 2019 — Sept 2022</div>
                 <ul class="exp-bullets">
-                    <li>Implemented asynchronous processing using Celery and Redis, improving system throughput and responsiveness, and monitored background jobs using Flower.</li>
-                    <li>Owned end-to-end delivery of backend features from design and implementation to deployment and production support, while mentoring junior developers and enforcing code quality standards.</li>
-                    <li>Improved system reliability and scalability by integrating load balancing and traffic management, enabling better fault tolerance and cost-efficient scaling.</li>
-                    <li>Led the migration of cloud infrastructure on GCP to a secure, private network setup with IAM hardening, access controls, backups, and disaster recovery mechanisms.</li>
+                    <li>Implemented asynchronous task processing with Celery and Redis, improving API response times and enabling processing of 200 background jobs/day; built Flower dashboards for real-time visibility into queue health.</li>
+                    <li>Owned end-to-end delivery of backend features — from technical design through deployment and on-call support — while mentoring 3 junior engineers and reducing PR review cycle time by 50%.</li>
+                    <li>Improved system reliability by implementing load balancing and traffic management; reduced error rate from 3% to 0.5% and enabled horizontal scaling to handle 5× peak load.</li>
+                    <li>Led GCP network hardening initiative: migrated services to a private VPC, enforced IAM least-privilege controls, configured automated backups with 1-hour RPO, and documented a tested disaster recovery runbook.</li>
                 </ul>
             </div>
+
+            <!-- ── UPDATED: Intern ── -->
             <div class="timeline-item fade-in">
                 <div class="exp-title">Software Developer Intern</div>
                 <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
                 <div class="exp-date">May 2019 — Oct 2019</div>
                 <ul class="exp-bullets">
-                    <li>Developed RESTful APIs using Django REST Framework, supporting core platform features and seamless integration with frontend and third-party services.</li>
-                    <li>Automated backend workflows and internal tools, reducing manual operations by 40% and improving delivery speed and reliability.</li>
+                    <li>Built RESTful APIs using Django REST Framework for 3 core platform features, integrated with frontend and third-party services.</li>
+                    <li>Automated manual backend workflows using Python scripts and Celery tasks; reduced manual operations effort by 20%, freeing ~5 hours/week for the team.</li>
                 </ul>
             </div>
+
         </div>
     </div>
 </div>
@@ -394,14 +403,12 @@
         <div class="section-divider fade-in"><span></span></div>
         <ul class="contact-list fade-in">
             <li>
-                <!-- Phone icon (inline SVG) -->
                 <svg class="contact-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24 11.36 11.36 0 0 0 3.56.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.56a1 1 0 0 1-.25 1.01l-2.2 2.22z"/>
                 </svg>
                 +91 9074423799
             </li>
             <li>
-                <!-- Email icon (inline SVG) -->
                 <svg class="contact-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
                 </svg>
