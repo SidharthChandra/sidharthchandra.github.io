@@ -267,11 +267,9 @@
                 <div class="tagline"><span class="tagline-text" id="taglineText"></span><span class="tagline-cursor"></span></div>
                 <!-- ── UPDATED BIO ── -->
                 <p class="bio-text">
-                    Senior Backend Engineer with 7 years of experience building high-availability, cloud-native systems at Clootrack.
-                    Owns the full stack of delivery — design, implementation, deployment, and production reliability.
-                    Led cloud infrastructure consolidation that cut monthly spend by ~50% on Azure/GCP.
-                    Specialises in Python, Django, distributed task queues (Celery), containerised microservices, and IaC with Terraform.
-                    Has mentored engineers, enforced engineering standards, and driven zero-downtime release pipelines at scale.
+                    Senior Backend Engineer with 7 years of experience designing and scaling high-availability backend, cloud-native systems for a B2B SaaS platform at Clootrack.
+                    Specialized in building robust APIs, distributed task processing systems, and multi-tenant architectures.
+                    Strong focus on performance optimization, data consistency, and reliability under scale, with hands-on experience in Python, Django, Celery, and PostgreSQL.
                 </p>
                 <br>
                 <a href="sidharth_p_resume.pdf" download style="text-decoration:none;">
@@ -293,27 +291,29 @@
 
             <!-- ── UPDATED: SDE III ── -->
             <div class="timeline-item fade-in">
-                <div class="exp-title">Software Development Engineer 3</div>
+                <div class="exp-title">Software Development Engineer III</div>
                 <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
                 <div class="exp-date">Oct 2022 — Present</div>
                 <ul class="exp-bullets">
-                    <li>Reduced cloud infrastructure spend by ~50% (₹60 Lakhs/month → ₹30 Lakhs/month) by re-architecting Azure and GCP environments with Terraform — introducing autoscaling policies, right-sizing VMs, and eliminating idle resources across 3 environments.</li>
-                    <li>Architected and delivered a multi-tenant cloud resource management platform on Azure; automated tenant onboarding from 3 days to under 2 hours, eliminating a class of manual provisioning errors and supporting 50+ active tenants.</li>
-                    <li>Designed and operated containerised microservices on Kubernetes with Docker; established CI/CD pipelines using GitHub Actions, enabling 9+ production deployments per week with zero downtime.</li>
-                    <li>Built and deployed a distributed web crawler with autoscaling and integrated a data-cleaning pipeline; reduced end-to-end crawl time by 40% and maintained stable p99 latency during traffic spikes.</li>
+                    <li>Built a scalable authentication backend using JWT-based architecture, supporting MFA (TOTP + email OTP) and federated OIDC login, and replaced Azure AD B2C with self-hosted Zitadel to enable full control over auth flows.</li>
+                    <li>Designed and built a data processing backend using Django and Celery to ingest and asynchronously process Excel datasets; implemented data validation, transformation pipelines, and integrated with data science workflows to deliver regression-based insights with dynamic recalculation based on user inputs.</li>
+                    <li>Reduced infrastructure cost by ~50% (₹60L → ₹30L/month) by redesigning backend service deployment and resource utilization strategy; implemented autoscaling, optimized service workloads, and eliminated inefficient compute patterns across distributed systems.</li>
+                    <li>Architected a multi-tenant backend platform handling tenant isolation, provisioning workflows, and resource orchestration on Azure; reduced onboarding time from 2 days to 2 hours by building automated backend workflows and APIs, improving system reliability, and eliminating manual errors.</li>
+                    <li>Designed and operated a containerized microservices-based backend system using Docker and Kubernetes; implemented CI/CD pipelines using GitHub Actions, enabling deployments with zero downtime.</li>
                 </ul>
             </div>
 
             <!-- ── UPDATED: SDE I ── -->
             <div class="timeline-item fade-in">
-                <div class="exp-title">Software Development Engineer</div>
+                <div class="exp-title">Software Development Engineer I</div>
                 <div class="exp-sub">Clootrack Software Labs Pvt Ltd</div>
                 <div class="exp-date">Nov 2019 — Sept 2022</div>
                 <ul class="exp-bullets">
-                    <li>Implemented asynchronous task processing with Celery and Redis, improving API response times and enabling processing of 200 background jobs/day; built Flower dashboards for real-time visibility into queue health.</li>
-                    <li>Owned end-to-end delivery of backend features — from technical design through deployment and on-call support — while mentoring 3 junior engineers and reducing PR review cycle time by 50%.</li>
-                    <li>Improved system reliability by implementing load balancing and traffic management; reduced error rate from 3% to 0.5% and enabled horizontal scaling to handle 5× peak load.</li>
-                    <li>Led GCP network hardening initiative: migrated services to a private VPC, enforced IAM least-privilege controls, configured automated backups with 1-hour RPO, and documented a tested disaster recovery runbook.</li>
+                    <li>Designed and implemented asynchronous task processing using Celery and Redis, decoupling heavy operations from the request lifecycle and improving API response times; handled ~200 background jobs/day with monitoring via Flower for queue health and failure visibility.</li>
+                    <li>Optimized database queries and indexing strategies to reduce latency under high load; implemented Redis caching with TTL and invalidation to reduce database pressure and improve API response times.</li>
+                    <li>Improved backend system reliability by implementing load balancing and traffic routing strategies; reduced error rates and enabled horizontal scaling to handle 5× peak traffic.</li>
+                    <li>Strengthened backend system reliability and data safety by redesigning network architecture with private VPC, enforcing least-privilege IAM, and implementing automated backups (1-hour RPO) with a tested disaster recovery workflow.</li>
+                    <li>Built a distributed web crawler with autoscaling and a data processing pipeline; optimized crawling, reducing end-to-end processing time by 40% while maintaining stable latency under traffic spikes.</li>
                 </ul>
             </div>
 
@@ -324,7 +324,7 @@
                 <div class="exp-date">May 2019 — Oct 2019</div>
                 <ul class="exp-bullets">
                     <li>Built RESTful APIs using Django REST Framework for 3 core platform features, integrated with frontend and third-party services.</li>
-                    <li>Automated manual backend workflows using Python scripts and Celery tasks; reduced manual operations effort by 20%, freeing ~5 hours/week for the team.</li>
+                    <li>Built a shared Python library to standardize health checks across microservices, exposing readiness and liveness endpoints with dependency checks (DB, Redis, Dapr).</li>
                 </ul>
             </div>
 
@@ -360,7 +360,7 @@
                     GitHub Contributions
                 </div>
                 <a href="https://github.com/SidharthChandra" target="_blank">
-                    <img src="https://github-readme-stats.vercel.app/api?username=SidharthChandra&show_icons=true&theme=dark&bg_color=0d0d0d&title_color=ffffff&text_color=aaaaaa&icon_color=aaaaaa&border_color=222222" alt="GitHub Stats">
+                    <img src="https://github-readme-stats-eight.vercel.app/api?username=SidharthChandra&show_icons=true&theme=dark&bg_color=0d0d0d&title_color=ffffff&text_color=aaaaaa&icon_color=aaaaaa&border_color=222222" alt="GitHub Stats">
                 </a>
             </div>
             <div class="stats-card fade-in">
