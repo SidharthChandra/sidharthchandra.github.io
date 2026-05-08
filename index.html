@@ -93,6 +93,29 @@
         .home-text { flex: 1; min-width: 260px; max-width: 560px; }
         .home-name { color: white; font-weight: bold; font-size: 3rem; }
 
+        /* ── VOICE ICON ── */
+        .voice-icon {
+            font-size: 1.5rem;
+            margin-left: 15px;
+            cursor: pointer;
+            color: #888;
+            transition: color 0.2s, transform 0.2s;
+            vertical-align: middle;
+        }
+        .voice-icon:hover {
+            color: white;
+            transform: scale(1.1);
+        }
+        .voice-icon.speaking {
+            color: #fff;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
         /* ── TYPING TAGLINE ── */
         .tagline {
             font-size: 1rem; color: #888; margin-top: 0.4rem; margin-bottom: 0.75rem;
@@ -263,7 +286,10 @@
         </div>
         <div class="home-inner">
             <div class="home-text">
-                <div class="tracking-in-expand home-name">Sidharth P</div>
+                <div class="tracking-in-expand home-name">
+                    Sidharth P
+                    <i class="fas fa-volume-up voice-icon" id="voiceIcon" title="Listen to intro"></i>
+                </div>
                 <div class="tagline"><span class="tagline-text" id="taglineText"></span><span class="tagline-cursor"></span></div>
                 <!-- ── UPDATED BIO ── -->
                 <p class="bio-text">
@@ -506,12 +532,71 @@
 })();
 
 // ── BACK TO TOP ──
-(function(){
-    var btn = document.getElementById('backToTop');
-    window.addEventListener('scroll', function(){
-        btn.classList.toggle('visible', window.scrollY > 400);
-    }, { passive: true });
-})();
+    (function(){
+        var btn = document.getElementById('backToTop');
+        window.addEventListener('scroll', function(){
+            btn.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+    })();
+
+    // ── VOICE INTRO ──
+    (function() {
+        const voiceIcon = document.getElementById('voiceIcon');
+        const introText = "Hi, I’m Sidharth. I currently work as an SDE 3 at Clootrack, a B2B SaaS company focused on customer experience. I started my career there as an intern about 7 years ago and have grown through roles from SDE 1 to SDE 3.";
+        let synth = window.speechSynthesis;
+        let utterance = null;
+
+        // Function to find the best male voice
+        function getBestMaleVoice() {
+            const voices = synth.getVoices();
+            if (voices.length === 0) return null;
+
+            // Priority list for "better" voices
+            const priorities = [
+                v => v.name.includes('Google') && v.name.includes('English') && (v.name.includes('Male') || v.name.includes('Display')),
+                v => v.name.includes('Rishi'), // High quality Indian English Male
+                v => v.name.includes('Evan') || v.name.includes('Nathan'), // High quality macOS Male
+                v => v.name.includes('Daniel') || v.name.includes('Alex'), // Standard macOS Male
+                v => (v.name.includes('Male') || v.name.includes('Guy')) && v.lang.startsWith('en')
+            ];
+
+            for (let check of priorities) {
+                const found = voices.find(check);
+                if (found) return found;
+            }
+            return voices.find(v => v.lang.startsWith('en')) || voices[0];
+        }
+
+        voiceIcon.addEventListener('click', function() {
+            if (synth.speaking) {
+                synth.cancel();
+                voiceIcon.classList.remove('speaking');
+                return;
+            }
+
+            utterance = new SpeechSynthesisUtterance(introText);
+            
+            const bestVoice = getBestMaleVoice();
+            if (bestVoice) {
+                utterance.voice = bestVoice;
+            }
+
+            // Fine-tune for better quality
+            utterance.rate = 0.95; // Slightly faster than before but still clear
+            utterance.pitch = 1.0; // Standard pitch
+
+            utterance.onend = () => voiceIcon.classList.remove('speaking');
+            utterance.onerror = () => voiceIcon.classList.remove('speaking');
+            
+            voiceIcon.classList.add('speaking');
+            synth.speak(utterance);
+        });
+
+        // Some browsers need this to load voices
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = getBestMaleVoice;
+        }
+    })();
 </script>
 </body>
 </html>
