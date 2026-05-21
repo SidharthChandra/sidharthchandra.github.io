@@ -443,11 +443,10 @@
 <div id="certifications" class="main-content page-section">
     <div class="container section-block">
         <div class="d-flex align-items-center justify-content-center" style="gap: 15px;">
-            <p class="section-label fade-in mb-0">Certifications</p>
-            <i class="fas fa-chevron-down toggle-icon fade-in" id="certToggle" style="cursor:pointer; color:#888; font-size:1.2rem;"></i>
+            <p class="section-label fade-in mb-0">Certifications (5)</p>
         </div>
         <div class="section-divider fade-in"><span></span></div>
-        <div id="certContent" class="collapsible-content">
+        <div id="certContent">
             <div class="timeline">
                 <div class="timeline-item cert-item fade-in">
                     <div class="exp-title d-flex align-items-center">
@@ -509,7 +508,7 @@
                         </li>
                     </div>
                 </div>
-                <div class="timeline-item cert-item fade-in">
+                <div class="timeline-item cert-item fade-in extra-cert d-none">
                     <div class="exp-title d-flex align-items-center">
                         <div class="cert-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -529,7 +528,7 @@
                         </li>
                     </div>
                 </div>
-                <div class="timeline-item cert-item fade-in">
+                <div class="timeline-item cert-item fade-in extra-cert d-none">
                     <div class="exp-title d-flex align-items-center">
                         <div class="cert-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -549,6 +548,11 @@
                         </li>
                     </div>
                 </div>
+            </div>
+            <div class="text-center mt-4 fade-in">
+                <button id="showMoreCerts" class="btn btn-outline-secondary btn-sm" style="color: #aaa; border-color: #444; border-radius: 20px; padding: 5px 20px; transition: all 0.3s;">
+                    Show more <i class="fas fa-chevron-down ml-2" style="font-size: 0.8rem;"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -801,19 +805,35 @@
         }
     })();
 
-    // ── CERTIFICATIONS TOGGLE ──
+    // ── CERTIFICATIONS SHOW MORE ──
     (function() {
-        const toggle = document.getElementById('certToggle');
-        const content = document.getElementById('certContent');
+        const showMoreBtn = document.getElementById('showMoreCerts');
+        const extraCerts = document.querySelectorAll('.extra-cert');
         
-        // Start expanded by default
-        content.classList.add('expanded');
-        toggle.classList.add('rotated');
+        if (showMoreBtn) {
+            showMoreBtn.addEventListener('click', function() {
+                const isHidden = extraCerts[0].classList.contains('d-none');
+                
+                extraCerts.forEach(cert => {
+                    if (isHidden) {
+                        cert.classList.remove('d-none');
+                        // Trigger fade-in for newly shown items
+                        setTimeout(() => cert.classList.add('visible'), 10);
+                    } else {
+                        cert.classList.add('d-none');
+                        cert.classList.remove('visible');
+                    }
+                });
 
-        toggle.addEventListener('click', function() {
-            content.classList.toggle('expanded');
-            toggle.classList.toggle('rotated');
-        });
+                if (isHidden) {
+                    showMoreBtn.innerHTML = 'Show less <i class="fas fa-chevron-up ml-2" style="font-size: 0.8rem;"></i>';
+                } else {
+                    showMoreBtn.innerHTML = 'Show more <i class="fas fa-chevron-down ml-2" style="font-size: 0.8rem;"></i>';
+                    // Scroll back to certifications section when hiding
+                    document.getElementById('certifications').scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }
     })();
 </script>
 </body>
