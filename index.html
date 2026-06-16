@@ -387,9 +387,9 @@
                 <div class="exp-date">Oct 2022 — Present</div>
                 <ul class="exp-bullets">
                     <li>Built a scalable authentication backend using JWT-based architecture, supporting MFA (TOTP + email OTP) and federated OIDC login, and replaced Azure AD B2C with self-hosted Zitadel to enable full control over auth flows.</li>
-                    <li>Designed and built a data processing backend using Django and Celery to ingest and asynchronously process Excel datasets; implemented data validation, transformation pipelines, and integrated with data science workflows to deliver regression-based insights with dynamic recalculation based on user inputs.</li>
+                    <li>Improved authorization scalability and reduced RBAC role explosion by migrating to ReBAC (Zanzibar/SpiceDB), enabling efficient graph-based permission checks for hierarchical resources (workspace → project → analysis).</li>
                     <li>Reduced infrastructure cost by ~50% (₹60L → ₹30L/month) by redesigning backend service deployment and resource utilization strategy; implemented autoscaling, optimized service workloads, and eliminated inefficient compute patterns across distributed systems.</li>
-                    <li>Architected a multi-tenant backend platform handling tenant isolation, provisioning workflows, and resource orchestration on Azure; reduced onboarding time from 2 days to 2 hours by building automated backend workflows and APIs, improving system reliability, and eliminating manual errors.</li>
+                    <li>Led the design of a DAG-based onboarding platform automating 15+ infrastructure and service provisioning workflows, reducing tenant setup time from ~1 day to ~3 minutes (~99.7% improvement) and enabling self-service operations. Built a scalable, extensible system using Django/DRF, Celery, and React with parallel execution, idempotency, and real-time visibility, driving cross-repo delivery.</li>
                     <li>Designed and operated a containerized microservices-based backend system using Docker and Kubernetes; implemented CI/CD pipelines using GitHub Actions, enabling deployments with zero downtime.</li>
                 </ul>
             </div>
